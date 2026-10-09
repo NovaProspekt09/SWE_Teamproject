@@ -24,7 +24,7 @@ typedef enum {
     OBS_ALL
 } ObstacleLocation;
 
-typedef enum { DUST_NONE = 0, DUST_NORMAL, DUST_HEAVY } DustLevel;
+typedef enum { DUST_NONE = 0, DUST_NORMAL } DustLevel;
 
 typedef enum {
     ACT_IDLE = 0,
@@ -50,9 +50,8 @@ void Motor_Interface(DriveAction a);
 void Cleaner_Interface(CleanAction a);
 
 /* ================== Afferent Modules =================== */
-ObstacleLocation Determine_Obstacle_Location(bool f, bool l, bool r);
-DustLevel        Determine_Dust_Existence(int dust_raw);
-bool             Dust_Existence(DustLevel lv);
+ObstacleLocation Determine_Obstacle_Location(void);
+DustLevel        Determine_Dust_Existence(void);
 
 /* ================== Efferent Modules =================== */
 void Move_Forward_Module(void);
@@ -65,13 +64,11 @@ void Power_Up_Clean_Module(void);
 
 /* ============== Central Transformation ================= */
 void       Controller_Init(void);
-RvcCommand Controller_Step(ObstacleLocation obs, DustLevel dust);
+RvcCommand Controller(void);
+unsigned int Controller_GetTick(void);
 RvcCommand Controller_GetLast(void);
-void       Controller_PowerUpSequence(void);
-
-/* ===================== Main Loop ======================= */
-void Rvc_Tick(void);
-int  Rvc_Main(int max_tick);   /* max_tick < 0 이면 무한 루프 */
+/* Implemented by the emulated interface, or by test doubles in RVC_TEST. */
+CleanAction Cleaner_Interface_GetLast(void);
 
 #ifdef __cplusplus
 }
