@@ -42,33 +42,37 @@ typedef struct {
 } RvcCommand;
 
 /* ============ Library Modules (HW Interface) ============ */
-bool Front_Sensor_Interface(void);
-bool Left_Sensor_Interface(void);
-bool Right_Sensor_Interface(void);
-int  Dust_Sensor_Interface(void);          /* 0 ~ 100 */
+bool Front_sensor_Interface(void);
+bool Left_sensor_Interface(void);
+bool Right_sensor_Interface(void);
+int  Dust_sensor_Interface(void);          /* 0 ~ 100 */
 void Motor_Interface(DriveAction a);
 void Cleaner_Interface(CleanAction a);
 
 /* ================== Afferent Modules =================== */
-ObstacleLocation Determine_Obstacle_Location(void);
-DustLevel        Determine_Dust_Existence(void);
+ObstacleLocation Determine_Obstacle_location(void);
+DustLevel        Determine_dust_existence(void);
 
 /* ================== Efferent Modules =================== */
-void Move_Forward_Module(void);
-void Move_Backward_Module(void);
+/* Enable/Disable: only state transitions send commands. */
+void Move_Forward_Module(bool enable);
+void Move_Backward_Module(bool enable);
+/* Trigger: start one non-blocking turn; further ticks advance it internally. */
 void Turn_Left_Module(void);
 void Turn_Right_Module(void);
-void Cleaner_Normal_Module(void);
-void Dust_Clean_Off_Module(void);
-void Power_Up_Clean_Module(void);
+void Cleaner_normal_Module(void);
+void Dust_Clean_off_Module(void);
+void Power_up_Clean_Module(void);
 
 /* ============== Central Transformation ================= */
+/* Sends OFF/IDLE and resets all state; also safe to call during operation. */
 void       Controller_Init(void);
 RvcCommand Controller(void);
 unsigned int Controller_GetTick(void);
 RvcCommand Controller_GetLast(void);
 /* Implemented by the emulated interface, or by test doubles in RVC_TEST. */
 CleanAction Cleaner_Interface_GetLast(void);
+DriveAction Motor_Interface_GetLast(void);
 
 #ifdef __cplusplus
 }
