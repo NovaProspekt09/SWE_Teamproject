@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Controller" />
+    <Filter Include="Tests" />
+    <Filter Include="GoogleTest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="header.h"><Filter>Controller</Filter></ClInclude>
+    <ClCompile Include="controller.c"><Filter>Controller</Filter></ClCompile>
+    <ClCompile Include="test_controller.cpp"><Filter>Tests</Filter></ClCompile>
+    <ClCompile Include="third_party\googletest\googletest\src\gtest-all.cc"><Filter>GoogleTest</Filter></ClCompile>
+    <ClCompile Include="third_party\googletest\googletest\src\gtest_main.cc"><Filter>GoogleTest</Filter></ClCompile>
+  </ItemGroup>
+</Project>
